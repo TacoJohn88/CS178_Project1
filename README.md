@@ -15,4 +15,3 @@ Different kinds of text
 - **this is bold**
 - *this is italics*
 - `this is code `
-- 
