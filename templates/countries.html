@@ -1,0 +1,22 @@
+<!-- templates/countries.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countries List</title>
+</head>
+<body>
+    <h1>Countries and Populations</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Population</th>
+        </tr>
+        {% for country in countries %}
+        <tr>
+            <td>{{ country["Name"] }}</td>
+            <td>{{ "{:,}".format(country["Population"]) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
