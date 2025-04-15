@@ -24,9 +24,12 @@ def home():
 
 @app.route('/countries')
 def countries():
-    countries_list = dbCode.execute_query("SELECT Name, Population FROM country LIMIT 10")
-    return render_template('countries.html', countries=countries_list)
-    return f"An error occurred: {e}"
+    try:
+        countries_list = dbCode.execute_query("SELECT Name, Population FROM country LIMIT 10")
+        return render_template('countries.html', countries=countries_list)
+    except Exception as e:
+        return f"An error occurred: {e}"
+
 
 # these two lines of code should always be the last in the file
 if __name__ == '__main__':
