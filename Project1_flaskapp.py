@@ -27,7 +27,16 @@ def home():
 @app.route('/countries')
 def countries():
     try:
-        all_countries = dbCode.execute_query("SELECT * FROM country")
+        all_countries = dbCode.execute_query("""
+                                             SELECT 
+                                                country.Name, 
+                                                country.Continent, 
+                                                country.Region, 
+                                                country.Population, 
+                                                GROUP_CONCAT(countrylanguage.Language SEPARATOR ', ') AS Languages
+                                             FROM country 
+                                             JOIN countrylanguage WHERE country.code = countrylanguage.countrycode 
+                                             GROUP BY country.Code, country.Name, country.Continent, country.Region, country.Population""")
         return render_template('countries.html', countries=all_countries)
     except Exception as e:
         return f"An error occurred: {e}"

@@ -9,12 +9,18 @@
     <table border="1">
         <tr>
             <th>Name</th>
+            <th>Continent</th>
+            <th>Region</th>
             <th>Population</th>
+            <th>Languages</th>
         </tr>
         {% for country in countries %}
         <tr>
             <td>{{ country["Name"] }}</td>
+            <td>{{ country["Continent"] }}</td>
+            <td>{{ country["Region"] }}</td>
             <td>{{ "{:,}".format(country["Population"]) }}</td>
+            <td>{{ country["Languages"] }}</td>
         </tr>
         {% endfor %}
     </table>
