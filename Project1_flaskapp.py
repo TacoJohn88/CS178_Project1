@@ -2,9 +2,11 @@
 
 from flask import Flask
 from flask import render_template
-from flask import request
+from flask import request, redirect, url_for
 import dbCode
+import boto3
 import creds
+from dbCode import user_table
 
 
 app = Flask(__name__)
@@ -42,26 +44,75 @@ def countries():
         return f"An error occurred: {e}"
     
 
-@app.route('/popsearch', methods=['GET'])
-def show_pop_form():
-    return render_template('popsearch.html')
+@app.route('/createuser', methods=['GET', 'POST'])
+def create_user():
+    if request.method == 'POST':
+        name = request.form['name']
+        languages = request.form.getlist('languages')  # no '[]' in name!
+
+        try:
+            user_table.put_item(
+                Item={
+                    'Username': name,
+                    'Languages': languages  # DynamoDB will store this as a list
+                }
+            )
+            return redirect('/readuser')
+        except Exception as e:
+            return f"An error occurred while creating user: {e}"
+
+    # Fetch distinct languages from RDS to populate the dropdown
+    language_query = "SELECT DISTINCT Language FROM countrylanguage ORDER BY Language"
+    language_data = dbCode.execute_query(language_query)
+    languages = [row['Language'] for row in language_data]
+
+    return render_template('createuser.html', languages=languages)
 
 
-@app.route('/largepop', methods=['POST'])
-def popsearch():
+
+@app.route('/readuser')
+def read_users():
+    response = user_table.scan()
+    users = response.get('Items', [])
+    return render_template('readuser.html', users=users)
+
+
+@app.route('/updateuser', methods=['GET', 'POST'])
+def update_user():
+    if request.method == 'POST':
+        name = request.form['name']
+        selected_languages = request.form.getlist('languages')
+
+        try:
+            user_table.update_item(
+                Key={'Username': name},
+                UpdateExpression='SET Languages = :langs',
+                ExpressionAttributeValues={':langs': selected_languages}
+            )
+            return redirect('/readuser')
+        except Exception as e:
+            return f"An error occurred while updating user: {e}"
+
+    # Get language options from RDS
     try:
-        pop = request.form.get('pop', type=int)
-
-        if pop is None:
-            return "Invalid population input."
-
-        query = "SELECT * FROM country WHERE Population >= %s ORDER BY Population DESC"
-        largepop = dbCode.execute_query(query, (pop,))
-
-        return render_template('largepop.html', countries=largepop, pop=pop)
-
+        all_languages = dbCode.execute_query("SELECT DISTINCT Language FROM countrylanguage ORDER BY Language")
+        language_list = [lang['Language'] for lang in all_languages]
     except Exception as e:
-        return f"An error occurred: {e}"
+        return f"An error occurred loading languages: {e}"
+
+    return render_template('updateuser.html', languages=language_list)
+
+
+
+@app.route('/deleteuser', methods=['GET', 'POST'])
+def delete_user():
+    if request.method == 'POST':
+        name = request.form['Username']
+        # Use 'Username' as the partition key here
+        user_table.delete_item(Key={'Username': name})
+        return redirect('/readuser')
+    return render_template('deleteuser.html')
+
 
 
 # these two lines of code should always be the last in the file

@@ -1,0 +1,7 @@
+<h1>All Users</h1>
+<ul>
+  {% for user in users %}
+    <li>{{ user["Username"] }} — {{ user["Languages"] }}</li>
+  {% endfor %}
+</ul>
+<a href="/countries">Back to Country List</a>

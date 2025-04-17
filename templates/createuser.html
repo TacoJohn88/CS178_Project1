@@ -1,0 +1,30 @@
+<h1>Create User</h1>
+<form method="POST">
+  Name: <input type="text" name="name"><br><br>
+
+  <label for="languages">Languages:</label><br>
+  <input type="text" id="languageSearch" placeholder="Search languages..."><br>
+  <select name="languages" multiple size="10" id="languageSelect">
+    {% for language in languages %}
+      <option value="{{ language }}">{{ language }}</option>
+    {% endfor %}
+  </select><br><br>
+
+  <input type="submit" value="Create">
+</form>
+
+<a href="/countries">Back to Country List</a>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchBox = document.getElementById("languageSearch");
+    const selectBox = document.getElementById("languageSelect");
+
+    searchBox.addEventListener("input", () => {
+      const search = searchBox.value.toLowerCase();
+      Array.from(selectBox.options).forEach(option => {
+        option.style.display = option.text.toLowerCase().includes(search) ? "" : "none";
+      });
+    });
+  });
+</script>

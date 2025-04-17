@@ -1,0 +1,15 @@
+<h1>Update User Languages</h1>
+<form method="POST">
+  Name: <input type="text" name="name"><br><br>
+
+  <label for="languages">New Languages:</label><br>
+  <select name="languages" multiple size="10" id="languageSelect" style="width: 300px;">
+    {% for language in languages %}
+      <option value="{{ language }}">{{ language }}</option>
+    {% endfor %}
+  </select><br><br>
+
+  <input type="submit" value="Update">
+</form>
+
+<a href="/countries">Back to Country List</a>

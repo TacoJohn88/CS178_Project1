@@ -4,8 +4,8 @@ import creds
 import boto3
 
 
-
-
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+user_table = dynamodb.Table('UserLanguages')
 
 def get_conn():
     """
@@ -35,3 +35,6 @@ def execute_query(query, args=()):
         return rows
     finally:
         conn.close()
+
+def get_all_languages():
+    return execute_query("SELECT DISTINCT Language FROM countrylanguage ORDER BY Language ASC")

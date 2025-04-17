@@ -1,28 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Countries</title>
-</head>
-<body>
-    <p>Click <a href="/popsearch">here</a> to search for countries by population.</p>
-    <h1>All Countries</h1>
-    <table border="1">
-        <tr>
-            <th>Name</th>
-            <th>Continent</th>
-            <th>Region</th>
-            <th>Population</th>
-            <th>Languages</th>
-        </tr>
-        {% for country in countries %}
-        <tr>
-            <td>{{ country["Name"] }}</td>
-            <td>{{ country["Continent"] }}</td>
-            <td>{{ country["Region"] }}</td>
-            <td>{{ "{:,}".format(country["Population"]) }}</td>
-            <td>{{ country["Languages"] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
+<h1>Countries</h1>
+
+<!-- Buttons -->
+<a href="/createuser"><button>Create User</button></a>
+<a href="/readuser"><button>View Users</button></a>
+<a href="/updateuser"><button>Update User</button></a>
+<a href="/deleteuser"><button>Delete User</button></a>
+
+<table border="1">
+  <tr>
+    <th>Name</th><th>Continent</th><th>Region</th><th>Population</th><th>Languages</th>
+  </tr>
+  {% for country in countries %}
+  <tr>
+    <td>{{ country["Name"] }}</td>
+    <td>{{ country["Continent"] }}</td>
+    <td>{{ country["Region"] }}</td>
+    <td>{{ "{:,}".format(country["Population"]) }}</td>
+    <td>{{ country["Languages"] }}</td>
+  </tr>
+  {% endfor %}
+</table>
