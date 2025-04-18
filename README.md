@@ -66,7 +66,9 @@ Key features:
 
     Then open your browser and go to:
 
-    ```http://localhost:8080/```
+    ```
+    http://localhost:8080/
+    ```
 
 ## App Navigation
 
