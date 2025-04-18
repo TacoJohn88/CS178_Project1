@@ -25,17 +25,20 @@ Key features:
 
 1. **Clone the repository**
 
-   ```bash
+   ```
+   bash
    git clone https://github.com/yourusername/project1-country-viewer.git
    cd project1-country-viewer
 
 2. **Install required libraries**
 
-    ```pip install flask pymysql boto3
+    ```
+    pip install flask pymysql boto3
 
 3. **Add your database credentials**
 
-    ```host = 'your-rds-endpoint'
+    ```
+    host = 'your-rds-endpoint'
     user = 'your-rds-username'
     password = 'your-rds-password'
     db = 'world'
@@ -43,10 +46,8 @@ Key features:
 4. **AWS DynamoDB setup**
 
     Ensure you have a DynamoDB table named UserLanguages with the following:
-
-    Partition key: Username (Type: String)
-
-    Attribute: Languages (Type: List of Strings)
+    **Partition key:** Username (Type: String)
+    **Attribute: Languages** (Type: List of Strings)
 
     You also need to have AWS credentials configured (via environment, AWS CLI, or IAM role) that allow access to this table.
 
@@ -54,11 +55,14 @@ Key features:
 
     In your terminal:
 
-    ```python Project1_flaskapp.py
+    ```
+    python Project1_flaskapp.py
+    ```
 
     Then open your browser and go to:
 
-    ```http://localhost:8080/
+    ```
+    http://localhost:8080/
 
 ## App Navigation
 
@@ -66,10 +70,10 @@ Key features:
 
 - **/countries – View all countries and their associated languages**
 
-- **/createuser – Create a new user and select one or more languages**
+- **/createuser – Create a new user and select a language**
 
-- **/readuser – View all users and their selected languages**
+- **/readuser – View all users and their selected language**
 
-- **/updateuser – Update a user’s language preferences**
+- **/updateuser – Update a user’s language preference**
 
 - **/deleteuser – Delete a user by name**
