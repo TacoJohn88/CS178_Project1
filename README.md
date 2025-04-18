@@ -29,11 +29,13 @@ Key features:
    bash
    git clone https://github.com/yourusername/project1-country-viewer.git
    cd project1-country-viewer
+   ```
 
 2. **Install required libraries**
 
     ```
     pip install flask pymysql boto3
+    ```
 
 3. **Add your database credentials**
 
@@ -42,11 +44,14 @@ Key features:
     user = 'your-rds-username'
     password = 'your-rds-password'
     db = 'world'
+    ```
 
 4. **AWS DynamoDB setup**
 
     Ensure you have a DynamoDB table named UserLanguages with the following:
+
     **Partition key:** Username (Type: String)
+
     **Attribute: Languages** (Type: List of Strings)
 
     You also need to have AWS credentials configured (via environment, AWS CLI, or IAM role) that allow access to this table.
@@ -61,8 +66,7 @@ Key features:
 
     Then open your browser and go to:
 
-    ```
-    http://localhost:8080/
+    ```http://localhost:8080/```
 
 ## App Navigation
 
